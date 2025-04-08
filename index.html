@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose App</title>
+    <style>
+        /* General reset for margin and padding */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        /* Container for the opening animation */
+        #opening-page {
+            background-color: #000000; /* Green background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+        }
+        /* Rose image styling */
+        #rose-img {
+            width: 150px;
+            height: 150px;
+            animation: openClose 3s infinite alternate;
+        }
+        /* Animation for the rose image */
+        @keyframes openClose {
+            0% { transform: scale(0.8); }
+            100% { transform: scale(1.2); }
+        }
+        /* ROSE text styling */
+        #rose-text {
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 20px;
+            background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+        /* Inner app content */
+        #inner-app {
+            display: none; /* Hidden initially */
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Opening Animation -->
+    <div id="opening-page">
+        <img id="rose-img" src="rose.gif" alt="Animated Rose">
+        <div id="rose-text">ROSE</div>
+    </div>
+        <!-- Additional content goes here -->
+    </div>
+    <script>
+        // Function to transition from the opening animation to the inner app
+        function showInnerApp() {
+            // Hide the opening animation
+            document.getElementById('opening-page').style.display = 'none';
+            // Display the inner app content
+            document.getElementById('inner-app').style.display = 'block';
+        }
+        // Set a timer to transition after 3.5 seconds
+        setTimeout(showInnerApp, 3500);
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose App</title>
+    <style>
+        /* General body styling */
+        body {
+            margin: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Navigation bar styling */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #222;
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px 0;
+            border-top: 2px solid #444;
+            z-index: 10;
+        }
+        .nav-button {
+            text-align: center;
+            flex: 1;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-button:hover {
+            background-color: #444;
+        }
+        .nav-button span {
+            display: block;
+            font-size: 12px;
+            margin-top: 5px;
+            color: #aaa;
+        }
+        /* Content styling */
+        .content {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-y: auto;
+            margin-bottom: 60px;
+        }
+        .content.active {
+            display: flex;
+        }
+        /* ROSE Logo */
+        img.rose-logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+        }
+        /* Task item layout */
+        .task {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #333;
+            margin: 2px 0;
+            padding: 5px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .task .task-details {
+            display: flex;
+            align-items: center;
+        }
+        .task img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .task .points {
+            display: block;
+            color: #ffcc00;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .task button {
+            padding: 5px 15px;
+            background-color: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .task button:hover {
+            background-color: #777;
+        }
+        .task button.claimed {
+            background-color: #444;
+            cursor: not-allowed;
+        }
+        /* Ranking list */
+        .ranking-list {
+            width: 100%;
+            max-width: 500px;
+        }
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            background-color: #444;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .ranking-item span {
+            font-size: 14px;
+        }
+        .ranking-item span.points {
+            color: #ffcc00;
+        }
+        /* Friends page styles */
+        #friends-page {
+            text-align: center;
+        }
+        .friend-list {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .friend-item {
+            background-color: #444;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            width: 80%;
+            max-width: 400px;
+        }
+        .friend-item span {
+            font-size: 14px;
+        }
+        .invite-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ffcc00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+        .invite-button:hover {
+            background-color: #ffb300;
+        }
+    </style>
+</head>
+<body>
+    <!-- HOME Page -->
+    <div class="content active" id="home-page">
+        <img src="rose.png" alt="Rose Logo" class="rose-logo"> <!-- Replace with actual image path -->
+        <h1 id="total-points">0</h1>
+        <p id="points-label">ROSE</p>
+    </div>
+    <!-- TASKS Page -->
+    <div class="content" id="tasks-page">
+        <h2>TASKS</h2>
+        <!-- Showing only selected logos -->
+        <div class="task">
+            <div class="task-details">
+                <img src="daily_reward.png" alt="Daily Reward Icon">
+                <div>
+                    <span>Daily Reward</span>
+                    <span class="points">+1,000 ROSE</span>
+                </div>
+            </div>
+            <button id="daily-reward-button" onclick="claimDailyReward()">CLAIM</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="telegram.png" alt="Telegram Logo">
+                <div>
+                    <span>Join ROSE Telegram</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://t.me/rose_blockchain_community')">GO</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="x-logo.png" alt="X Logo">
+                <div>
+                    <span>Follow ROSE on X</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://x.com/ROSE_BLOCKCHAIN')">GO</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="youtube.png" alt="YouTube Logo">
+                <div>
+                    <span>Join ROSE YouTube Channel</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://www.youtube.com/@ROSE_BLOCKCHAIN')">GO</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="tiktok.png" alt="TikTok Logo">
+                <div>
+                    <span>Follow ROSE on TIKTOK</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://www.tiktok.com/@rose_blockchain?_t=ZS-8sQGof9A95N&_r=1')">GO</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="instagram.png" alt="Instagram Logo">
+                <div>
+                    <span>Follow ROSE on Instagram</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://www.instagram.com/rose__blockchain/')">GO</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="blum.png" alt="Blum Logo">
+                <div>
+                    <span>Launch Blum App</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://t.me/blum/app?startapp=ref_ySpXAyNqv6')">GO</button>
+        </div>
+        <div class="task">
+            <div class="task-details">
+                <img src="paws.png" alt="Paws Logo">
+                <div>
+                    <span>Launch PAWS App</span>
+                    <span class="points">+10,000 ROSE</span>
+                </div>
+            </div>
+            <button onclick="handleTask(this, 'https://t.me/PAWSOG_bot/PAWS?startapp=aAcgibsD')">GO</button>
+        </div>
+    </div>
+    <!-- FRIENDS Page -->
+<div class="content" id="friends-page">
+    <h2>Total Friends: <span id="total-friends">0</span></h2>
+    <div id="invited-friends-list" class="friend-list"></div>
+    <button class="invite-button" onclick="inviteFriend()">INVITE FRIENDS</button>
+</div>
+    <!-- RANKING Page -->
+    <div class="content" id="ranking-page">
+        <h2>RANKING</h2>
+        <div class="ranking-list" id="ranking-list"></div>
+    </div>
+    <!-- Navigation Bar -->
+    <div class="nav-bar">
+        <div class="nav-button" onclick="navigate('home-page')">
+            🏠
+            <span>HOME</span>
+        </div>
+        <div class="nav-button" onclick="navigate('tasks-page')">
+            🎁
+            <span>TASKS</span>
+        </div>
+        <div class="nav-button" onclick="navigate('friends-page')">
+            👥
+            <span>FRIENDS</span>
+        </div>
+        <div class="nav-button" onclick="navigate('ranking-page')">
+            🏆
+            <span>RANKING</span>
+        </div>
+    </div>
+    <script>
+        let totalPoints = 0;
+        let totalFriends = 0;
+        // A simple function to generate a unique user identifier
+        function generateUserId() {
+            return 'user' + Math.random().toString(36).substr(2, 9); // Generates a random user ID
+        }
+        // Check if a user ID exists in localStorage, if not create one
+        let userId = localStorage.getItem('userId');
+        if (!userId) {
+            userId = generateUserId();
+            localStorage.setItem('userId', userId); // Store the user ID in localStorage
+        }
+        const rankingData = [
+            { username: "@yahya14", points: 10050000 },
+            { username: "@waleed601", points: 7806200 },
+            { username: "@henry55", points: 7254980 },
+            { username: "@jack76", points: 6938570 },
+            { username: "@oliver58", points: 6666390 },
+            { username: "@anas888", points: 6396560 },
+            { username: "@ron342", points: 5865670 },
+            { username: "@george76", points: 5564500 },
+            { username: "@osama6235", points: 5285880 },
+            { username: "@preety557", points: 5075590 }, 
+        ];
+        function navigate(pageId) {
+            document.querySelectorAll('.content').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+        function handleTask(button, link) {
+            if (button.textContent === "GO") {
+                window.open(link, '_blank');
+                button.textContent = "CLAIM";
+                button.style.backgroundColor = "blue";
+                button.style.color = "white";
+            } else if (button.textContent === "CLAIM") {
+                totalPoints += 10000;
+                document.getElementById('total-points').textContent = totalPoints;
+                document.getElementById('total-friends').textContent = totalFriends; // Update the total friends count
+                button.innerHTML = "&#10003;"; // Add white tick ✔
+                button.style.backgroundColor = "white"; // White background
+                button.style.color = "black"; // Optional: Black tick color
+                button.disabled = true; // Disable button to prevent further clicks
+            }
+        }
+        function loadRanking() {
+            const rankingList = document.getElementById('ranking-list');
+            rankingData.forEach((player, index) => {
+                const item = document.createElement('div');
+                item.className = 'ranking-item';
+                item.innerHTML = `<span>${index + 1}. ${player.username}</span><span class="points">${player.points} ROSE</span>`;
+                rankingList.appendChild(item);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', loadRanking);
+    </script>
+<script>
+    // Declare or retrieve the userId globally
+    let userId = localStorage.getItem("userId");
+    if (!userId) {
+        userId = `user_${Math.random().toString(36).substr(2, 9)}`;
+        localStorage.setItem("userId", userId);
+    }
+
+    // Global variables for total points and friends
+    let totalPoints = 0;
+    let totalFriends = 0;
+
+    // Function to generate and copy an invite link
+    function inviteFriend() {
+        const inviteLink = `https://saudking48.github.io/ROSE-/join?ref=${userId}`;
+        console.log("Generated invite link:", inviteLink);
+
+        // Attempt to copy the invite link to the clipboard
+        navigator.clipboard.writeText(inviteLink)
+            .then(() => {
+                alert(`Your invite link has been copied!\nShare this link with your friends: ${inviteLink}`);
+            })
+            .catch(err => {
+                console.error("Failed to copy invite link:", err);
+                alert(`Copy failed. Here's your invite link: ${inviteLink}`);
+            });
+    }
+
+    // Function to check if friends joined using the invite link
+    async function checkFriendInvites() {
+        try {
+            // Fetch data from the backend to get friends who joined
+            const response = await fetch(`https://saudking48.github.io/ROSE-/get-friends?userId=${userId}`);
+            if (!response.ok) throw new Error("Failed to fetch friends data.");
+
+            const data = await response.json();
+
+            // Update friends list and points only if new friends are added
+            const friendList = document.getElementById("invited-friends-list");
+            friendList.innerHTML = ""; // Clear existing list
+
+            data.friends.forEach(friend => {
+                addFriendToList(friend.name); // Add friend to the UI
+            });
+
+            // Update total points and total friends
+            totalFriends = data.friends.length;
+            totalPoints = data.points;
+
+            document.getElementById("total-friends").textContent = totalFriends;
+            document.getElementById("total-points").textContent = `${totalPoints} ROSE`;
+        } catch (error) {
+            console.error("Error checking friend invites:", error);
+            alert("Unable to fetch invite data. Please check your internet connection.");
+        }
+    }
+
+    // Function to add a friend's name to the list
+    function addFriendToList(friendName) {
+        const friendList = document.getElementById("invited-friends-list");
+        const friendItem = document.createElement("div");
+        friendItem.className = "friend-item";
+        friendItem.innerHTML = `
+            <span>${friendName}</span>
+            <span>+10,000 ROSE</span>
+        `;
+        friendList.appendChild(friendItem);
+    }
+
+    // Periodically check for new friends
+    setInterval(checkFriendInvites, 10000); // Check every 10 seconds
+</script>
+<script>
+    // Function to claim the daily reward
+    function claimDailyReward() {
+        const lastClaimTime = localStorage.getItem('lastDailyRewardClaimTime');
+        const currentTime = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        if (lastClaimTime && (currentTime - lastClaimTime) < oneDay) {
+            const timeRemaining = oneDay - (currentTime - lastClaimTime);
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            alert(`You can claim your next daily reward in ${hours} hours and ${minutes} minutes.`);
+            return;
+        }
+        // Update total points
+        totalPoints += 1000;
+        document.getElementById('total-points').textContent = totalPoints;
+        // Update the last claim time
+        localStorage.setItem('lastDailyRewardClaimTime', currentTime);
+        // Disable the button after claiming
+        const button = document.getElementById('daily-reward-button');
+        button.disabled = true;
+        button.textContent = "CLAIMED";
+        button.style.backgroundColor = "#444";
+        button.style.cursor = "not-allowed";
+        // Re-enable the button after 24 hours
+        setTimeout(() => {
+            button.disabled = false;
+            button.textContent = "CLAIM";
+            button.style.backgroundColor = "";
+            button.style.cursor = "pointer";
+        }, oneDay);
+    }
+    // Check if the daily reward can be claimed on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const lastClaimTime = localStorage.getItem('lastDailyRewardClaimTime');
+        const currentTime = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+        const button = document.getElementById('daily-reward-button');
+        if (lastClaimTime && (currentTime - lastClaimTime) < oneDay) {
+            button.disabled = true;
+            button.textContent = "CLAIMED";
+            button.style.backgroundColor = "#444";
+            button.style.cursor = "not-allowed";
+            const timeRemaining = oneDay - (currentTime - lastClaimTime);
+            setTimeout(() => {
+                button.disabled = false;
+                button.textContent = "CLAIM";
+                button.style.backgroundColor = "";
+                button.<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
